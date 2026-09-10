@@ -41,7 +41,7 @@ The challenge: **determine how many units of each size to produce to maximize to
 
 ## Optimization Model
 
-The model is formulated as an **Integer Linear Program (ILP)** solved using **CVXPY** with default solver (GLPK_MI / HiGHS).
+The model is formulated as an **Integer Linear Program (ILP)** solved using **CVXPY**. The application calls `problem.solve()` using CVXPY's default available solver, with `cp.SCIPY` used as a fallback if the primary solver raises an exception.
 
 ### Decision Variables
 
@@ -103,7 +103,7 @@ flowchart TD
     A["Business Inputs\n(Demand, Prices, Costs)"]
     B["Factory Resource Data\n(PVC, Fabric, Labor, Storage)"]
     C["CVXPY Optimization Model\n(Integer Linear Program)"]
-    D["GLPK_MI / HiGHS Solver"]
+    D["CVXPY Solver\n(default + SciPy fallback)"]
     E["Optimal Production Plan\n(units per size)"]
     F["Resource Utilization Analysis\nBottleneck Identification"]
     G["Sensitivity Analysis\n(storage capacity sweep)"]
@@ -248,7 +248,7 @@ The Streamlit application (`app.py`) provides a five-page decision-support inter
 |-------------------|------------------------------------|
 | Language          | Python 3.x                         |
 | Optimization      | CVXPY (Integer Linear Programming) |
-| Solver backend    | GLPK_MI / HiGHS (via CVXPY)        |
+| Solver backend    | CVXPY default solver (SciPy fallback) |
 | Dashboard         | Streamlit                          |
 | Data              | NumPy, Pandas                      |
 | Visualization     | Plotly (dashboard), Matplotlib (charts) |
@@ -321,7 +321,7 @@ The dashboard will open automatically in your browser at `http://localhost:8501`
 jupyter notebook notebooks/EasyOrganizerOptimization.ipynb
 ```
 
-Or open the file directly in JupyterLab / VS Code. Run all cells sequentially. The notebook requires the same dependencies as `requirements.txt`, plus `matplotlib` for the chart cells.
+Or open the file directly in JupyterLab / VS Code. Run all cells sequentially. The notebook requires the same dependencies listed in `requirements.txt`.
 
 ---
 
@@ -329,7 +329,7 @@ Or open the file directly in JupyterLab / VS Code. Run all cells sequentially. T
 
 This project demonstrates the practical application of **Operations Research** techniques to a production planning problem:
 
-- **Integer Linear Programming** — modeling a real discrete production decision with binary/integer decision variables, a linear objective, and linear constraints.
+- **Integer Linear Programming** — modeling a real discrete production decision with integer decision variables, a linear objective, and linear constraints.
 - **Translating business requirements into constraints** — each physical and operational limit becomes a formal inequality constraint in the model.
 - **Resource bottleneck identification** — by computing utilization rates at the optimal solution, the binding constraint (storage) is unambiguously identified.
 - **Sensitivity analysis** — parametric sweeps reveal how much the optimal objective changes as resource capacities vary, providing quantitative guidance for investment decisions.

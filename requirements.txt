@@ -4,3 +4,5 @@ numpy
 pandas
 plotly
 streamlit-option-menu
+matplotlib
+jupyter
